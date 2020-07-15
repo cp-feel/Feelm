@@ -17,7 +17,6 @@
 		106FA9A724BBD0B300FAF386 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106FA9A624BBD0B300FAF386 /* Player.swift */; };
 		106FA9B024BD91C300FAF386 /* Player+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 106FA9AF24BD91C300FAF386 /* Player+Protocol.swift */; };
 		106FA9D924BED8EB00FAF386 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 106FA96D24B84A6D00FAF386 /* AVFoundation.framework */; };
-		106FA9DA24BED90200FAF386 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 106FA91E24B7F6B900FAF386 /* Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -183,7 +182,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				106FA9DA24BED90200FAF386 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
