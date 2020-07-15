@@ -39,7 +39,7 @@ iOS AVFoundation class wrapping library
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  spec.license      = { :type => "MIT", :file => "license" }
+  spec.license      = { :type => "MIT", :file => "license.md" }
   # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
 
 
@@ -92,7 +92,7 @@ iOS AVFoundation class wrapping library
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "Feelm", "Feelm/**/*.{h,swift,plist}"
+  spec.source_files  = "Feelm", "Feelm/**/*.{h,swift}", "Feelm/**/license.*"
   #spec.exclude_files = "Classes/Exclude"
 
   # spec.public_header_files = "Classes/**/*.h"
