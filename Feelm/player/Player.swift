@@ -16,6 +16,8 @@ public class Player: NSObject {
     public let MAX_VOLUME : Float = 10.0       //최대 불륨, 실수형 상수
     public var volume:Float = 10.0
     public var isPlaying = false
+    public var isReadyForPlay = false
+    public var maxPlayTime = 0.0
     
     var progressTimer: Timer!          //타이머를 위한 변수
     let timeRecordSelector:Selector = #selector(updatePlayTime)
@@ -26,6 +28,7 @@ public class Player: NSObject {
         //에러 처리
         self.playFile = playFile
         self.avPlayer = AVPlayer(url: playFile)
+        //self.avPlayer.seek(to: CMTime.zero)
         
         //audioplayer의 델리게이트를 self로 한다.
 //        self.audioPlayer.delegate = self
@@ -37,10 +40,25 @@ public class Player: NSObject {
         NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidReachEnd(notification:)), name: .AVPlayerItemDidPlayToEndTime, object: avPlayer?.currentItem)
         
         self.isPlaying = false
+        self.isReadyForPlay = true
     }
     
     public func play(){
+        do {
+            try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, options: [])
+        }
+        catch {
+            print("Setting category to AVAudioSessionCategoryPlayback failed.")
+        }
 //        self.audioPlayer.play()
+        if self.avPlayer == nil {
+            return
+        }
+        if self.progressTimer != nil {
+            self.progressTimer.invalidate()
+            self.progressTimer = nil
+        }
+        
         self.avPlayer.play()
         self.isPlaying = true
         self.progressTimer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: timeRecordSelector, userInfo: nil, repeats: true)
@@ -53,12 +71,20 @@ public class Player: NSObject {
         self.avPlayer.pause()
         self.avPlayer.seek(to: CMTime.zero)
         self.isPlaying = false
+        if self.progressTimer != nil {
+            self.progressTimer.invalidate()
+            self.progressTimer = nil
+        }
     }
     
     public func pause(){
 //        self.audioPlayer.pause()
         self.avPlayer.pause()
         self.isPlaying = false
+        if self.progressTimer != nil {
+            self.progressTimer.invalidate()
+            self.progressTimer = nil
+        }
     }
     
     public func addItem(){
@@ -66,10 +92,16 @@ public class Player: NSObject {
     }
     
     @objc func updatePlayTime(){
-        self.delegate?.playTimeUpdate?(self.avPlayer.currentTime().seconds)
+//        print("Player Timer")
+        let time = self.avPlayer.currentTime().seconds
+        self.delegate?.playTimeUpdate?(time)
+        if(self.maxPlayTime > 0 && time >= self.maxPlayTime){
+            self.avPlayer.seek(to: CMTime.zero)
+        }
     }
     
     @objc func playerItemDidReachEnd(notification: Notification) {
+//        print("Play End Check")
         if let playerItem = notification.object as? AVPlayerItem {
             playerItem.seek(to: CMTime.zero)
             self.play()

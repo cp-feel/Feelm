@@ -92,8 +92,8 @@ iOS AVFoundation class wrapping library
   #  Not including the public_header_files will make all headers public.
   #
 
-  spec.source_files  = "Feelm", "Feelm/**/*.{h,swift}", "Feelm/**/license.*"
-  #spec.exclude_files = "Classes/Exclude"
+  spec.source_files  = "Feelm", "Feelm/**/*.{h,swift}"
+  spec.exclude_files = "Feelm/**/*.plist"
 
   # spec.public_header_files = "Classes/**/*.h"
 
